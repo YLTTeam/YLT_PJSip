@@ -1,4 +1,4 @@
-/* $Id: config.h 5661 2017-09-25 04:20:21Z ming $ */
+/* $Id: config.h 4913 2014-09-03 08:39:58Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -72,31 +72,6 @@
 #   undef PJ_WIN32_WINCE
 #   define PJ_WIN32_WINCE   1
 #   include <pj/compat/os_win32_wince.h>
-
-    /* Also define Win32 */
-#   define PJ_WIN32 1
-
-#elif defined(PJ_WIN32_WINPHONE8) || defined(_WIN32_WINPHONE8)
-    /*
-     * Windows Phone 8
-     */
-#   undef PJ_WIN32_WINPHONE8
-#   define PJ_WIN32_WINPHONE8   1
-#   include <pj/compat/os_winphone8.h>
-
-    /* Also define Win32 */
-#   define PJ_WIN32 1
-
-#elif defined(PJ_WIN32_UWP) || defined(_WIN32_UWP)
-    /*
-     * Windows UWP
-     */
-#   undef PJ_WIN32_UWP
-#   define PJ_WIN32_UWP   1
-#   include <pj/compat/os_winuwp.h>
-
-    /* Define Windows phone */
-#   define PJ_WIN32_WINPHONE8 1
 
     /* Also define Win32 */
 #   define PJ_WIN32 1
@@ -186,8 +161,7 @@
 
 
 #elif defined (PJ_M_X86_64) || defined(__amd64__) || defined(__amd64) || \
-	defined(__x86_64__) || defined(__x86_64) || \
-	defined(_M_X64) || defined(_M_AMD64)
+	defined(__x86_64__) || defined(__x86_64)
     /*
      * AMD 64bit processor, little endian
      */
@@ -261,23 +235,18 @@
 #   define PJ_IS_LITTLE_ENDIAN	0
 #   define PJ_IS_BIG_ENDIAN	1
 
-#elif defined(ARM) || defined(_ARM_) ||  defined(__arm__) || defined(_M_ARM)
-#   define PJ_HAS_PENTIUM	0
+#elif defined (PJ_M_ARMV4) || defined(ARM) || defined(_ARM_) ||  \
+	defined(ARMV4) || defined(__arm__)
     /*
      * ARM, bi-endian, so raise error if endianness is not configured
      */
+#   undef PJ_M_ARMV4
+#   define PJ_M_ARMV4		1
+#   define PJ_M_NAME		"armv4"
+#   define PJ_HAS_PENTIUM	0
 #   if !PJ_IS_LITTLE_ENDIAN && !PJ_IS_BIG_ENDIAN
 #   	error Endianness must be declared for this processor
 #   endif
-#   if defined (PJ_M_ARMV7) || defined(ARMV7)
-#	undef PJ_M_ARMV7
-#	define PJ_M_ARM7		1
-#	define PJ_M_NAME		"armv7"
-#   elif defined (PJ_M_ARMV4) || defined(ARMV4)
-#	undef PJ_M_ARMV4
-#	define PJ_M_ARMV4		1
-#	define PJ_M_NAME		"armv4"
-#   endif 
 
 #elif defined (PJ_M_POWERPC) || defined(__powerpc) || defined(__powerpc__) || \
 	defined(__POWERPC__) || defined(__ppc__) || defined(_M_PPC) || \
@@ -469,33 +438,6 @@
  */
 #ifndef PJ_LOG_INDENT_CHAR
 #   define PJ_LOG_INDENT_CHAR	    '.'
-#endif
-
-/**
- * Log sender width.
- *
- * Default: 22 (for 64-bit machines), 14 otherwise
- */
-#ifndef PJ_LOG_SENDER_WIDTH
-#   if PJ_HAS_STDINT_H
-#       include <stdint.h>
-#       if (UINTPTR_MAX == 0xffffffffffffffff)
-#           define PJ_LOG_SENDER_WIDTH  22
-#       else
-#           define PJ_LOG_SENDER_WIDTH  14
-#       endif
-#   else
-#       define PJ_LOG_SENDER_WIDTH  14
-#   endif
-#endif
-
-/**
- * Log thread name width.
- *
- * Default: 12
- */
-#ifndef PJ_LOG_THREAD_WIDTH
-#   define PJ_LOG_THREAD_WIDTH	    12
 #endif
 
 /**
@@ -732,18 +674,12 @@
 #else
     /* When FD_SETSIZE is not changeable, check if PJ_IOQUEUE_MAX_HANDLES
      * is lower than FD_SETSIZE value.
-     *
-     * Update: Not all ioqueue backends require this (such as epoll), so
-     * this check will be done on the ioqueue implementation itself, such as
-     * ioqueue select.
      */
-/*
 #   ifdef FD_SETSIZE
 #	if PJ_IOQUEUE_MAX_HANDLES > FD_SETSIZE
 #	    error "PJ_IOQUEUE_MAX_HANDLES is greater than FD_SETSIZE"
 #	endif
 #   endif
-*/
 #endif
 
 
@@ -899,9 +835,6 @@
 /** QoS backend for Symbian */
 #define PJ_QOS_SYMBIAN	    4
 
-/** QoS backend for Darwin */
-#define PJ_QOS_DARWIN	    5
-
 /**
  * Force the use of some QoS backend API for some platforms.
  */
@@ -909,9 +842,6 @@
 #   if defined(PJ_WIN32_WINCE) && PJ_WIN32_WINCE && _WIN32_WCE >= 0x502
 	/* Windows Mobile 6 or later */
 #	define PJ_QOS_IMPLEMENTATION    PJ_QOS_WM
-#   elif defined(PJ_DARWINOS)
-	/* Darwin OS (e.g: iOS, MacOS, tvOS) */
-#	define PJ_QOS_IMPLEMENTATION    PJ_QOS_DARWIN
 #   endif
 #endif
 
@@ -925,38 +855,6 @@
  */
 #ifndef PJ_HAS_SSL_SOCK
 #  define PJ_HAS_SSL_SOCK	    0
-#endif
-
-
-/**
- * Define the maximum number of ciphers supported by the secure socket.
- *
- * Default: 256
- */
-#ifndef PJ_SSL_SOCK_MAX_CIPHERS
-#  define PJ_SSL_SOCK_MAX_CIPHERS   256
-#endif
-
-
-/**
- * Specify what should be set as the available list of SSL_CIPHERs. For
- * example, set this as "DEFAULT" to use the default cipher list (Note:
- * PJSIP release 2.4 and before used this "DEFAULT" setting).
- *
- * Default: "HIGH:-COMPLEMENTOFDEFAULT"
- */
-#ifndef PJ_SSL_SOCK_OSSL_CIPHERS
-#  define PJ_SSL_SOCK_OSSL_CIPHERS   "HIGH:-COMPLEMENTOFDEFAULT"
-#endif
-
-
-/**
- * Define the maximum number of curves supported by the secure socket.
- *
- * Default: 32
- */
-#ifndef PJ_SSL_SOCK_MAX_CURVES
-#  define PJ_SSL_SOCK_MAX_CURVES   32
 #endif
 
 
@@ -1290,7 +1188,7 @@ PJ_BEGIN_DECL
 #define PJ_VERSION_NUM_MAJOR	2
 
 /** PJLIB version minor number. */
-#define PJ_VERSION_NUM_MINOR	7
+#define PJ_VERSION_NUM_MINOR	3
 
 /** PJLIB version revision number. */
 #define PJ_VERSION_NUM_REV	0

@@ -1,10 +1,12 @@
-
+install! 'cocoapods', :deterministic_uuids => false
 use_frameworks!
 platform :ios, "9.0"
 
 target 'YLT_PJSip_Example' do
   pod 'YLT_PJSip', :path => '../'
-
+  pod 'OpenSSL'
+  pod 'ReactiveObjC'
+  
   target 'YLT_PJSip_Tests' do
     inherit! :search_paths
 

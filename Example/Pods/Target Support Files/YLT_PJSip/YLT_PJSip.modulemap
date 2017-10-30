@@ -1,0 +1,6 @@
+framework module YLT_PJSip {
+  umbrella header "YLT_PJSip-umbrella.h"
+
+  export *
+  module * { export * }
+}

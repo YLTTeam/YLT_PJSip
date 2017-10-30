@@ -7,6 +7,8 @@
 //
 
 #import "YLTViewController.h"
+#import <pjlib.h>
+#import <YLT_PJSip.h>
 
 @interface YLTViewController ()
 
@@ -17,7 +19,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+//    YLT_SipUser *user = [[YLT_SipUser alloc] init];
+//    user.username = @"xph";
+//    NSLog(@"%@", user.username);
 }
 
 - (void)didReceiveMemoryWarning

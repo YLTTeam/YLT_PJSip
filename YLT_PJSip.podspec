@@ -15,23 +15,22 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '9.0'
 
-   s.source_files = 'YLT_PJSip/Classes/src/PJSipModular.{h,m}'#,'YLT_PJSip/Classes/include/**/*.{h,m}']
-   s.public_header_files = 'YLT_PJSip/Classes/src/PJSipModular.h'#,'YLT_PJSip/Classes/include/**/*.h']
-  # s.preserve_paths = ['YLT_PJSip/Classes/**/*','YLT_PJSip/Classes/include/**/*']
-  # s.vendored_libraries = 'YLT_PJSip/Classes/lib/*.a'
+  s.source_files        =   'YLT_PJSip/Classes/include/**/*.h'
 
-  # header_search_paths   =['"$(PODS_ROOT)/Headers/Public/YLT_PJSip/pjlib/include"',
-  #                         '"$(PODS_ROOT)/Headers/Public/YLT_PJSip/pjlib-util/include"',
-  #                         '"$(PODS_ROOT)/Headers/Public/YLT_PJSip/pjmedia/include"',
-  #                         '"$(PODS_ROOT)/Headers/Public/YLT_PJSip/pjnath/include"',
-  #                         '"$(PODS_ROOT)/Headers/Public/YLT_PJSip/pjsip/include"']
-  # s.xcconfig            = {
-  #     'HEADER_SEARCH_PATHS'          => header_search_paths.join(' '),
-  #     'GCC_PREPROCESSOR_DEFINITIONS' => 'PJ_AUTOCONF=1'
-  # }
-  # s.frameworks          = 'CFNetwork', 'AudioToolbox', 'AVFoundation', 'CoreMedia'
-  # s.libraries           = 'stdc++'
-  # s.header_mappings_dir = 'YLT_PJSip/Classes'
+  s.public_header_files =   'YLT_PJSip/Classes/include/**/*.h'
+
+  s.preserve_paths      = 'YLT_PJSip/Classes/include/**/*{h,hpp}'
+
+  s.vendored_libraries  = 'YLT_PJSip/Classes/lib/*.a'
+
+  s.xcconfig            = {
+      'GCC_PREPROCESSOR_DEFINITIONS' => 'PJ_AUTOCONF=1',
+      'HEADER_SEARCH_PATHS'          => '$(inherited) $(PODS_ROOT)/YLT_PJSip/Classes/include'
+  }
+  s.frameworks          = 'CFNetwork', 'AudioToolbox', 'AVFoundation', 'CoreMedia'
+  s.libraries           = 'stdc++'
+  s.header_mappings_dir = 'YLT_PJSip/Classes/include'
+  # s.requires_arc = true
   s.dependency 'YLT_BaseLib'
 
 end

@@ -1,0 +1,11 @@
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/MJExtension" "$PODS_CONFIGURATION_BUILD_DIR/ReactiveObjC" "$PODS_CONFIGURATION_BUILD_DIR/YLT_BaseLib"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/OpenSSL" "${PODS_ROOT}/Headers/Public/YLT_PJSip"
+LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
+LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/OpenSSL/lib" "${PODS_ROOT}/../../YLT_PJSip/Classes/lib"
+OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/MJExtension/MJExtension.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/ReactiveObjC/ReactiveObjC.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/YLT_BaseLib/YLT_BaseLib.framework/Headers" -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/OpenSSL" -isystem "${PODS_ROOT}/Headers/Public/YLT_PJSip"
+OTHER_LDFLAGS = $(inherited) -l"crypto" -l"ssl" -l"stdc++" -framework "AVFoundation" -framework "AudioToolbox" -framework "CFNetwork" -framework "CoreMedia"
+PODS_BUILD_DIR = $BUILD_DIR
+PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
+PODS_ROOT = ${SRCROOT}/Pods

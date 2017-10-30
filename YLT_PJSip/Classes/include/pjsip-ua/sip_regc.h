@@ -1,4 +1,4 @@
-/* $Id: sip_regc.h 5356 2016-06-24 13:03:25Z nanang $ */
+/* $Id: sip_regc.h 4586 2013-09-04 10:07:45Z ming $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -77,7 +77,6 @@ struct pjsip_regc_cbparam
     int			 expiration;/**< Next expiration interval.	    */
     int			 contact_cnt;/**<Number of contacts in response.    */
     pjsip_contact_hdr	*contact[PJSIP_REGC_MAX_CONTACT]; /**< Contacts.    */
-    pj_bool_t		 is_unreg;  /**< Expire header, if any, set to zero?*/
 };
 
 

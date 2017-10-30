@@ -1,4 +1,4 @@
-/* $Id: sound.h 5321 2016-05-26 04:51:07Z nanang $ */
+/* $Id: sound.h 3553 2011-05-05 06:14:19Z nanang $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -75,8 +75,7 @@ typedef struct pjmedia_snd_stream pjmedia_snd_stream;
  */
 typedef struct pjmedia_snd_dev_info
 {
-    char	name[PJMEDIA_AUD_DEV_INFO_NAME_LEN];	        
-    					/**< Device name.		    */
+    char	name[64];	        /**< Device name.		    */
     unsigned	input_count;	        /**< Max number of input channels.  */
     unsigned	output_count;	        /**< Max number of output channels. */
     unsigned	default_samples_per_sec;/**< Default sampling rate.	    */
@@ -140,26 +139,15 @@ typedef pj_status_t (*pjmedia_snd_rec_cb)(/* in */   void *user_data,
  *
  * @return		Zero on success.
  */
-PJ_INLINE(pj_status_t) pjmedia_snd_init(pj_pool_factory *factory)
-{
-    /* This function is inlined to avoid pjmedia's dependency on
-     * pjmedia-audiodev.
-     */
-    return pjmedia_aud_subsys_init(factory);
-}
+PJ_DECL(pj_status_t) pjmedia_snd_init(pj_pool_factory *factory);
+
 
 /**
  * Get the number of devices detected by the library.
  *
  * @return		Number of devices.
  */
-PJ_INLINE(int) pjmedia_snd_get_dev_count(void)
-{
-    /* This function is inlined to avoid pjmedia's dependency on
-     * pjmedia-audiodev.
-     */
-    return (int)pjmedia_aud_dev_count();
-}
+PJ_DECL(int) pjmedia_snd_get_dev_count(void);
 
 
 /**
@@ -334,13 +322,7 @@ PJ_DECL(pj_status_t) pjmedia_snd_stream_close(pjmedia_snd_stream *stream);
  *
  * @return		Zero on success.
  */
-PJ_INLINE(pj_status_t) pjmedia_snd_deinit(void)
-{
-    /* This function is inlined to avoid pjmedia's dependency on
-     * pjmedia-audiodev.
-     */
-    return pjmedia_aud_subsys_shutdown();
-}
+PJ_DECL(pj_status_t) pjmedia_snd_deinit(void);
 
 
 

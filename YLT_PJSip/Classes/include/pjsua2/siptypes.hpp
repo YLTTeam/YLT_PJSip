@@ -1,4 +1,4 @@
-/* $Id: siptypes.hpp 4968 2014-12-18 04:40:35Z riza $ */
+/* $Id: siptypes.hpp 4704 2014-01-16 05:30:46Z ming $ */
 /*
  * Copyright (C) 2032 Teluu Inc. (http://www.teluu.com)
  *
@@ -145,23 +145,13 @@ struct TlsConfig : public PersistentObject
     string		password;
 
     /**
-     * TLS protocol method from #pjsip_ssl_method. In the future, this field
-     * might be deprecated in favor of <b>proto</b> field. For now, this field 
-     * is only applicable only when <b>proto</b> field is set to zero.
+     * TLS protocol method from pjsip_ssl_method.
      *
      * Default is PJSIP_SSL_UNSPECIFIED_METHOD (0), which in turn will
-     * use PJSIP_SSL_DEFAULT_METHOD, which default value is PJSIP_TLSV1_METHOD.
+     * use PJSIP_SSL_DEFAULT_METHOD, which default value is
+     * PJSIP_TLSV1_METHOD.
      */
     pjsip_ssl_method	method;
-
-    /**
-     * TLS protocol type from #pj_ssl_sock_proto. Use this field to enable 
-     * specific protocol type. Use bitwise OR operation to combine the protocol 
-     * type.
-     *
-     * Default is PJSIP_SSL_DEFAULT_PROTO.
-     */
-    unsigned		proto;
 
     /**
      * Ciphers and order preference. The Endpoint::utilSslGetAvailableCiphers()
@@ -534,23 +524,18 @@ struct TimerEvent
 };
 
 /**
- * This structure describes transaction state event source.
- */
-struct TsxStateEventSrc
-{
-    SipRxData       rdata;          /**< The incoming message.      */
-    SipTxData       tdata;          /**< The outgoing message.      */
-    TimerEntry      timer;          /**< The timer.                 */
-    pj_status_t     status;         /**< Transport error status.    */
-    GenericData     data;           /**< Generic data.              */
-};
-
-/**
  * This structure describes transaction state changed event.
  */
 struct TsxStateEvent
 {
-    TsxStateEventSrc    src;            /**< Event source.              */
+    struct
+    {
+        SipRxData       rdata;          /**< The incoming message.      */
+        SipTxData       tdata;          /**< The outgoing message.      */
+        TimerEntry      timer;          /**< The timer.                 */
+        pj_status_t     status;         /**< Transport error status.    */
+        GenericData     data;           /**< Generic data.              */
+    } src;                              /**< Event source.              */
     SipTransaction      tsx;            /**< The transaction.           */
     pjsip_tsx_state_e   prevState;      /**< Previous state.            */
     pjsip_event_id_e    type;           /**< Type of event source:
@@ -599,43 +584,6 @@ struct UserEvent
 };
 
 /**
- * The event body.
- */
-struct SipEventBody
-{
-    /**
-     * Timer event.
-     */
-    TimerEvent      timer;
-    
-    /**
-     * Transaction state has changed event.
-     */
-    TsxStateEvent   tsxState;
-    
-    /**
-     * Message transmission event.
-     */
-    TxMsgEvent      txMsg;
-    
-    /**
-     * Transmission error event.
-     */
-    TxErrorEvent    txError;
-    
-    /**
-     * Message arrival event.
-     */
-    RxMsgEvent      rxMsg;
-    
-    /**
-     * User event.
-     */
-    UserEvent       user;
-    
-};
-
-/**
  * This structure describe event descriptor to fully identify a SIP event. It
  * corresponds to the pjsip_event structure in PJSIP library.
  */
@@ -649,7 +597,39 @@ struct SipEvent
     /**
      * The event body, which fields depends on the event type.
      */
-    SipEventBody        body;
+    struct
+    {
+        /**
+         * Timer event.
+         */
+        TimerEvent      timer;
+        
+        /**
+         * Transaction state has changed event.
+         */
+        TsxStateEvent   tsxState;
+        
+        /**
+         * Message transmission event.
+         */
+        TxMsgEvent      txMsg;
+        
+        /**
+         * Transmission error event.
+         */
+        TxErrorEvent    txError;
+        
+        /**
+         * Message arrival event.
+         */
+        RxMsgEvent      rxMsg;
+        
+        /**
+         * User event.
+         */
+        UserEvent       user;
+        
+    } body;
     
     /**
      * Pointer to its original pjsip_event. Only valid when the struct is

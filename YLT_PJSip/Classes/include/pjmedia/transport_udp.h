@@ -103,7 +103,6 @@ PJ_DECL(pj_status_t) pjmedia_transport_udp_create2(pjmedia_endpt *endpt,
 						   unsigned options,
 						   pjmedia_transport **p_tp);
 
-PJ_DECL(pj_status_t) pjmedia_set_key(unsigned char* keybuf, unsigned int buflen);
 /**
  * Another variant of #pjmedia_transport_udp_create() which allows
  * the creation of IPv6 transport.

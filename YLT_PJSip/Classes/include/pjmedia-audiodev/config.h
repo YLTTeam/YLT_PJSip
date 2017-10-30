@@ -1,4 +1,4 @@
-/* $Id: config.h 5546 2017-01-25 04:15:11Z nanang $ */
+/* $Id: config.h 4537 2013-06-19 06:47:43Z riza $ */
 /* 
  * Copyright (C) 2008-2011 Teluu Inc. (http://www.teluu.com)
  * Copyright (C) 2003-2008 Benny Prijono <benny@prijono.org>
@@ -43,26 +43,19 @@ PJ_BEGIN_DECL
  */
 
 /**
- * This setting controls the buffer length of audio device name.
- *
- * Default: 128 for Windows platforms, 64 for others
- */
-#ifndef PJMEDIA_AUD_DEV_INFO_NAME_LEN
-#   if (defined(PJ_WIN32) && PJ_WIN32!=0) || \
-       (defined(PJ_WIN64) && PJ_WIN64!=0)
-#	define PJMEDIA_AUD_DEV_INFO_NAME_LEN 128
-#   else
-#	define PJMEDIA_AUD_DEV_INFO_NAME_LEN 64
-#   endif
-#endif
-
-/**
  * This setting controls whether PortAudio support should be included.
  *
- * By default it is disabled.
+ * By default it is enabled except on Windows platforms (including
+ * Windows Mobile) and Symbian.
  */
 #ifndef PJMEDIA_AUDIO_DEV_HAS_PORTAUDIO
-#   define PJMEDIA_AUDIO_DEV_HAS_PORTAUDIO	0
+#   if (defined(PJ_WIN32) && PJ_WIN32!=0) || \
+       (defined(PJ_WIN64) && PJ_WIN64!=0) || \
+       (defined(PJ_SYMBIAN) && PJ_SYMBIAN!=0)
+#	define PJMEDIA_AUDIO_DEV_HAS_PORTAUDIO	0
+#   else
+#	define PJMEDIA_AUDIO_DEV_HAS_PORTAUDIO	1
+#   endif
 #endif
 
 /**
@@ -78,7 +71,7 @@ PJ_BEGIN_DECL
  * included.
  */
 #ifndef PJMEDIA_AUDIO_DEV_HAS_ANDROID_JNI
-#   define PJMEDIA_AUDIO_DEV_HAS_ANDROID_JNI    PJ_ANDROID
+#   define PJMEDIA_AUDIO_DEV_HAS_ANDROID_JNI    0
 #endif
 
 /**
@@ -113,34 +106,15 @@ PJ_BEGIN_DECL
 #endif
 
 
- /**
-  * This setting controls whether WMME support should be included.
-  */
+/**
+ * This setting controls whether WMME support should be included.
+ */
 #ifndef PJMEDIA_AUDIO_DEV_HAS_WMME
-#  if (defined(PJ_WIN32_UWP) && PJ_WIN32_UWP!=0) || \
-      (defined(PJ_WIN32_WINPHONE8) && PJ_WIN32_WINPHONE8!=0)
-#    define PJMEDIA_AUDIO_DEV_HAS_WMME		0
-#  else
-#    define PJMEDIA_AUDIO_DEV_HAS_WMME		1
-#  endif
+#   define PJMEDIA_AUDIO_DEV_HAS_WMME		1
 #endif
 
-
- /**
-  * This setting controls whether Windows Audio Session API (WASAPI)
-  * support should be included.
-  */
-#ifndef PJMEDIA_AUDIO_DEV_HAS_WASAPI
-#  if (defined(PJ_WIN32_UWP) && PJ_WIN32_UWP!=0) || \
-      (defined(PJ_WIN32_WINPHONE8) && PJ_WIN32_WINPHONE8!=0)
-#    define PJMEDIA_AUDIO_DEV_HAS_WASAPI	1
-#  else
-#    define PJMEDIA_AUDIO_DEV_HAS_WASAPI	0
-#  endif
-#endif
-
-
- /**
+ 
+/**
  * This setting controls whether BDIMAD support should be included.
  */
 #ifndef PJMEDIA_AUDIO_DEV_HAS_BDIMAD

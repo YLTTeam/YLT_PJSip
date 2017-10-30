@@ -1,4 +1,4 @@
-/* $Id: account.hpp 5649 2017-09-15 05:32:08Z riza $ */
+/* $Id: account.hpp 4889 2014-08-18 09:09:18Z bennylp $ */
 /*
  * Copyright (C) 2013 Teluu Inc. (http://www.teluu.com)
  *
@@ -70,17 +70,6 @@ struct AccountRegConfig : public PersistentObject
     SipHeaderVector	headers;
 
     /**
-     * Additional parameters that will be appended in the Contact header
-     * of the registration requests. This will be appended after
-     * \a AccountSipConfig.contactParams;
-     *
-     * The parameters should be preceeded by semicolon, and all strings must
-     * be properly escaped. Example:
-     *	 ";my-param=X;another-param=Hi%20there"
-     */
-    string	    	contactParams;
-
-    /**
      * Optional interval for registration, in seconds. If the value is zero,
      * default interval will be used (PJSUA_REG_INTERVAL, 300 seconds).
      */
@@ -92,12 +81,10 @@ struct AccountRegConfig : public PersistentObject
      * disable auto re-registration. Note that if the registration retry
      * occurs because of transport failure, the first retry will be done
      * after \a firstRetryIntervalSec seconds instead. Also note that
-     * the interval will be randomized slightly by some seconds (specified
-     * in \a reg_retry_random_interval) to avoid all clients re-registering
-     * at the same time.
+     * the interval will be randomized slightly by approximately +/- ten
+     * seconds to avoid all clients re-registering at the same time.
      *
-     * See also \a firstRetryIntervalSec and \a randomRetryIntervalSec
-     * settings.
+     * See also \a firstRetryIntervalSec setting.
      *
      * Default: PJSUA_REG_RETRY_INTERVAL
      */
@@ -106,30 +93,11 @@ struct AccountRegConfig : public PersistentObject
     /**
      * This specifies the interval for the first registration retry. The
      * registration retry is explained in \a retryIntervalSec. Note that
-     * the value here will also be randomized by some seconds (specified
-     * in \a reg_retry_random_interval) to avoid all clients re-registering
-     * at the same time.
-     *
-     * See also \a retryIntervalSec and \a randomRetryIntervalSec settings.
+     * the value here will also be randomized by +/- ten seconds.
      *
      * Default: 0
      */
     unsigned		firstRetryIntervalSec;
-
-    /**
-     * This specifies maximum randomized value to be added/substracted
-     * to/from the registration retry interval specified in \a
-     * reg_retry_interval and \a reg_first_retry_interval, in second.
-     * This is useful to avoid all clients re-registering at the same time.
-     * For example, if the registration retry interval is set to 100 seconds
-     * and this is set to 10 seconds, the actual registration retry interval
-     * will be in the range of 90 to 110 seconds.
-     *
-     * See also \a retryIntervalSec and \a firstRetryIntervalSec settings.
-     *
-     * Default: 10
-     */
-    unsigned		randomRetryIntervalSec;
 
     /**
      * Specify the number of seconds to refresh the client registration
@@ -154,7 +122,7 @@ struct AccountRegConfig : public PersistentObject
      *
      * Default: PJSUA_UNREG_TIMEOUT
      */
-    unsigned		unregWaitMsec;
+    unsigned		unregWaitSec;
 
     /**
      * Specify how the registration uses the outbound and account proxy
@@ -467,13 +435,6 @@ struct AccountNatConfig : public PersistentObject
      * Default: PJSUA_STUN_USE_DEFAULT
      */
     pjsua_stun_use 	mediaStunUse;
-
-    /**
-     * Specify NAT64 options.
-     *
-     * Default: PJSUA_NAT64_DISABLED
-     */
-    pjsua_nat64_opt 	nat64Opt;
 
     /**
      * Enable ICE for the media transport.
@@ -849,21 +810,6 @@ struct AccountVideoConfig : public PersistentObject
      */
     unsigned			rateControlBandwidth;
 
-    /**
-     * The number of keyframe to be sent after the stream is created.
-     *
-     * Default: PJMEDIA_VID_STREAM_START_KEYFRAME_CNT
-     */
-    unsigned			    startKeyframeCount;
-
-    /**
-     * The keyframe sending interval after the stream is created.
-     *
-     * Default: PJMEDIA_VID_STREAM_START_KEYFRAME_INTERVAL_MSEC
-     */
-    unsigned			    startKeyframeInterval;
-
-
 public:
     /**
      * Read this object from a container node.
@@ -879,56 +825,6 @@ public:
      */
     virtual void writeObject(ContainerNode &node) const throw(Error);
 };
-
-/**
- * Account config specific to IP address change.
- */
-typedef struct AccountIpChangeConfig
-{    
-    /**
-     * Shutdown the transport used for account registration. If this is set to
-     * PJ_TRUE, the transport will be shutdown altough it's used by multiple
-     * account. Shutdown transport will be followed by re-Registration if
-     * AccountConfig.natConfig.contactRewriteUse is enabled.
-     *
-     * Default: true
-     */
-    bool    		shutdownTp;
-
-    /**
-     * Hangup active calls associated with the acount. If this is set to true, 
-     * then the calls will be hang up.
-     *
-     * Default: false
-     */
-    bool		hangupCalls;
-
-    /**
-     * Specify the call flags used in the re-INVITE when \a hangupCalls is set 
-     * to false. If this is set to 0, no re-INVITE will be sent. The 
-     * re-INVITE will be sent after re-Registration is finished.
-     *
-     * Default: PJSUA_CALL_REINIT_MEDIA | PJSUA_CALL_UPDATE_CONTACT |
-     *          PJSUA_CALL_UPDATE_VIA
-     */
-    unsigned		reinviteFlags;
-
-public:
-    /**
-     * Read this object from a container node.
-     *
-     * @param node		Container to read values from.
-     */
-    virtual void readObject(const ContainerNode &node) throw(Error);
-
-    /**
-     * Write this object to a container node.
-     *
-     * @param node		Container to write values to.
-     */
-    virtual void writeObject(ContainerNode &node) const throw(Error);
-    
-} AccountIpChangeConfig;
 
 /**
  * Account configuration.
@@ -990,11 +886,6 @@ struct AccountConfig : public PersistentObject
      * Video settings.
      */
     AccountVideoConfig	videoConfig;
-
-    /**
-     * IP Change settings.
-     */
-    AccountIpChangeConfig ipChangeConfig;
 
 public:
     /**
