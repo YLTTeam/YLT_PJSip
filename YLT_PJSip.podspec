@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'YLT_PJSip'
-  s.version          = '0.0.2'
+  s.version          = '0.0.3'
   s.summary          = 'A short description of YLT_PJSip.'
 
   s.description      = <<-DESC
@@ -31,6 +31,6 @@ TODO: Add long description of the pod here.
   s.libraries           = 'stdc++'
   s.header_mappings_dir = 'YLT_PJSip/Classes/include'
   # s.requires_arc = true
-  s.dependency 'YLT_BaseLib'
+  #s.dependency 'YLT_BaseLib'
 
 end
