@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <YLT_BaseLib/YLT_BaseLib.h>
-#import <openssl/evp.h>
+//#import <openssl/evp.h>
 #import <pjsua.h>
 
 @interface YLT_SipUser : YLT_BaseModel
