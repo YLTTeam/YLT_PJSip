@@ -60,13 +60,13 @@
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		A231F0FB4BEE82BB4C146966 /* YLT_PJSip.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = YLT_PJSip.podspec; path = ../YLT_PJSip.podspec; sourceTree = "<group>"; };
+		A231F0FB4BEE82BB4C146966 /* YLT_PJSip.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = YLT_PJSip.podspec; path = ../YLT_PJSip.podspec; sourceTree = "<group>"; };
 		A2D22ECBAF6E5E6F78AB386D /* Pods-YLT_PJSip_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YLT_PJSip_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YLT_PJSip_Example/Pods-YLT_PJSip_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		A502F31F6BCA236A1799D334 /* Pods-YLT_PJSip_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YLT_PJSip_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-YLT_PJSip_Example/Pods-YLT_PJSip_Example.release.xcconfig"; sourceTree = "<group>"; };
-		A8DBCA96E6D11A94AE79E753 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		A8DBCA96E6D11A94AE79E753 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		C4EFC98F5079596222418522 /* Pods-YLT_PJSip_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YLT_PJSip_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YLT_PJSip_Tests/Pods-YLT_PJSip_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		E67EFE8CC5982E49D4F296B9 /* Pods_YLT_PJSip_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YLT_PJSip_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F3F9780A7EDC9A779185FB76 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		F3F9780A7EDC9A779185FB76 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -536,6 +536,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "YLT_PJSip/YLT_PJSip-Prefix.pch";
 				INFOPLIST_FILE = "YLT_PJSip/YLT_PJSip-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -551,6 +552,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "YLT_PJSip/YLT_PJSip-Prefix.pch";
 				INFOPLIST_FILE = "YLT_PJSip/YLT_PJSip-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
