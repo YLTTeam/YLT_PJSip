@@ -36,6 +36,7 @@
 #include <pjmedia/stream_common.h>
 #include <pj/sock.h>
 
+#include "pjmedia/rtp_utils.h"
 PJ_BEGIN_DECL
 
 

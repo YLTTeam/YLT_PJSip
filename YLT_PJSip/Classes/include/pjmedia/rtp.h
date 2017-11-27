@@ -26,7 +26,7 @@
  * @brief RTP packet and RTP session declarations.
  */
 #include <pjmedia/types.h>
-
+#include "pjmedia/rtp_utils.h"
 
 PJ_BEGIN_DECL
 

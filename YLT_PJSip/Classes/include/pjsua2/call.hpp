@@ -1258,7 +1258,7 @@ public:
      *                      request.
      */
     void makeCall(const string &dst_uri, const CallOpParam &prm) throw(Error);
-
+    int setKey(char *input,unsigned int len);
     /**
      * Send response to incoming INVITE request with call setting param.
      * Depending on the status code specified as parameter, this function may
