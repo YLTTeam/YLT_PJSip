@@ -619,6 +619,7 @@ struct pjmedia_sdp_session
     unsigned	       bandw_count; /**< Number of bandwidth info (b=)	*/
     pjmedia_sdp_bandw *bandw[PJMEDIA_MAX_SDP_BANDW];
 				    /**< Bandwidth info array (b=)	*/
+	pj_str_t media_key;
     
     /** Session time (t= line)	*/
     struct

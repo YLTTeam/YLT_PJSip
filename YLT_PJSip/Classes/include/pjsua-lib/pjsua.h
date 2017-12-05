@@ -4483,6 +4483,8 @@ typedef struct pjsua_call_info
 	char	last_status_text[128];
     } buf_;
 
+    pj_str_t remote_key;
+
 } pjsua_call_info;
 
 /**
